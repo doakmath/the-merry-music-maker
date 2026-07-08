@@ -1,26 +1,70 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Layout from "./components/Layout";
+
+import Home from "./pages/Home";
+import Music from "./pages/Music";
+import Videos from "./pages/Videos";
+import Bio from "./pages/Bio";
+import History from "./pages/History";
+import Other from "./pages/Other";
 
 
 function App() {
   return (
-    <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
-      <section className="text-center">
-        <p className="text-sm uppercase tracking-[0.35em] text-amber-300">
-          The Merry Music Maker
-        </p>
-        <h1 className="mt-4 text-5xl font-bold">
-          Music, memory, and magic.
-        </h1>
-      </section>
-    </main>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="music" element={<Music />} />
+          <Route path="videos" element={<Videos />} />
+          <Route path="bio" element={<Bio />} />
+          <Route path="history" element={<History />} />
+          <Route path="other" element={<Other />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useState } from 'react'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from './assets/vite.svg'
+// import heroImg from './assets/hero.png'
+// import './App.css'
+
+
+// function App() {
+//   return (
+//     <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
+//       <section className="text-center">
+//         <p className="text-sm uppercase tracking-[0.35em] text-amber-300">
+//           The Merry Music Maker
+//         </p>
+//         <h1 className="mt-4 text-5xl font-bold">
+//           Music, memory, and magic.
+//         </h1>
+//       </section>
+//     </main>
+//   )
+// }
+
+// export default App
 
 // function App() {
 //   const [count, setCount] = useState(0)
