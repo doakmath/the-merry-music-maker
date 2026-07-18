@@ -9,6 +9,8 @@ import Bio from "./pages/Bio";
 import History from "./pages/History";
 import Other from "./pages/Other";
 
+import AlbumDetail from "./pages/AlbumDetail";
+
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="bio" element={<Bio />} />
           <Route path="history" element={<History />} />
           <Route path="other" element={<Other />} />
+          
+          <Route path="/music/:albumId" element={<AlbumDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>

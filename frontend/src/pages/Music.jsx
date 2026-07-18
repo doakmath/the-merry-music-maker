@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
+import AlbumCard from "../components/AlbumCard";
 
-import { getSongs } from "../api/songs";
-
+import { getAlbums } from "../api/albums";
 
 function Music() {
-  const [songs, setSongs] = useState([]);
+  const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
-    getSongs()
+    getAlbums()
       .then((data) => {
-        setSongs(data);
+        setAlbums(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -20,25 +19,21 @@ function Music() {
       });
   }, []);
 
-
   if (loading) {
-    return <p>Loading songs...</p>;
+    return <p>Loading albums...</p>;
   }
 
-
   return (
-    <div>
-      <h1>Music</h1>
+    <div className="p-8">
+      <h1 className="mb-6 text-4xl font-bold">Music</h1>
 
-      {songs.map((song) => (
-        <div key={song.id}>
-          <h2>{song.title}</h2>
-          <p>{song.description}</p>
-        </div>
-      ))}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {albums.map((album) => (
+          <AlbumCard key={album.id} album={album} />
+        ))}
+      </div>
     </div>
   );
 }
-
 
 export default Music;
