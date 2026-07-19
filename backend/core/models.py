@@ -121,3 +121,20 @@ class ContentSection(models.Model):
 
     def __str__(self):
         return f"{self.page} - {self.title}"
+
+
+class GalleryImage(models.Model):
+    image = models.ImageField(upload_to="gallery/")
+
+    title = models.CharField(max_length=200, blank=True)
+    caption = models.TextField(blank=True)
+    alt_text = models.CharField(max_length=300, blank=True)
+
+    date_taken = models.DateField(blank=True, null=True)
+    display_order = models.PositiveIntegerField(default=0)
+    is_featured = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title or self.image.name

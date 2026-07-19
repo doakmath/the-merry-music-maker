@@ -7,6 +7,7 @@ from .models import (
     HistoryEvent,
     ContentSection,
     SiteSettings,
+    GalleryImage,
 )
 
 
@@ -62,4 +63,15 @@ class SiteSettingsAdmin(admin.ModelAdmin):
     list_display = (
         "site_title",
         "contact_email",
+    )
+
+
+@admin.register(GalleryImage)
+class GalleryImageAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "date_taken",
+        "is_featured",
+        "display_order",
+        "created_at",
     )

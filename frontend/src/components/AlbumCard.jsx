@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
+import Card from "./ui/Card";
+
 
 function AlbumCard({ album }) {
   return (
     <Link
       to={`/music/${album.id}`}
-      className="block overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+      className="block"
     >
-      <article>
+      <Card>
         <div className="aspect-square bg-gray-200">
           {album.cover_image ? (
             <img
@@ -26,7 +28,7 @@ function AlbumCard({ album }) {
             {album.title}
           </h2>
         </div>
-      </article>
+      </Card>
     </Link>
   );
 }

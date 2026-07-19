@@ -8,8 +8,10 @@ import Videos from "./pages/Videos";
 import Bio from "./pages/Bio";
 import History from "./pages/History";
 import Other from "./pages/Other";
+import Gallery from "./pages/Gallery";
 
 import AlbumDetail from "./pages/AlbumDetail";
+
 
 
 function App() {
@@ -23,7 +25,8 @@ function App() {
           <Route path="bio" element={<Bio />} />
           <Route path="history" element={<History />} />
           <Route path="other" element={<Other />} />
-          
+          <Route path="/gallery" element={<Gallery />} />
+
           <Route path="/music/:albumId" element={<AlbumDetail />} />
         </Route>
       </Routes>

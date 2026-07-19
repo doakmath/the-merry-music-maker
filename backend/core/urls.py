@@ -7,6 +7,7 @@ from .views import (
     HistoryEventViewSet,
     ContentSectionViewSet,
     SiteSettingsViewSet,
+    GalleryImageViewSet,
 )
 
 
@@ -18,5 +19,10 @@ router.register("videos", VideoViewSet)
 router.register("history-events", HistoryEventViewSet)
 router.register("content-sections", ContentSectionViewSet)
 router.register("site-settings", SiteSettingsViewSet)
+router.register(
+    "gallery-images",
+    GalleryImageViewSet,
+    basename="gallery-image",
+)
 
 urlpatterns = router.urls

@@ -9,7 +9,9 @@ function Navbar() {
       <Link to="/videos">Videos</Link>{" "}
       <Link to="/bio">Bio</Link>{" "}
       <Link to="/history">History</Link>{" "}
+      <Link to="/gallery">Gallery</Link>{" "}
       <Link to="/other">Other</Link>
+
     </nav>
   );
 }

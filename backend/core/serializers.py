@@ -7,6 +7,7 @@ from .models import (
     HistoryEvent,
     ContentSection,
     SiteSettings,
+    GalleryImage,
 )
 
 
@@ -45,4 +46,10 @@ class ContentSectionSerializer(serializers.ModelSerializer):
 class SiteSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SiteSettings
+        fields = "__all__"
+
+
+class GalleryImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GalleryImage
         fields = "__all__"

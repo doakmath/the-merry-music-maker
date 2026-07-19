@@ -9,6 +9,7 @@ from .models import (
     HistoryEvent,
     ContentSection,
     SiteSettings,
+    GalleryImage,
 )
 
 from .serializers import (
@@ -18,6 +19,7 @@ from .serializers import (
     HistoryEventSerializer,
     ContentSectionSerializer,
     SiteSettingsSerializer,
+    GalleryImageSerializer,
 )
 
 
@@ -49,3 +51,11 @@ class ContentSectionViewSet(viewsets.ReadOnlyModelViewSet):
 class SiteSettingsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = SiteSettings.objects.all()
     serializer_class = SiteSettingsSerializer
+
+
+class GalleryImageViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = GalleryImage.objects.all().order_by(
+        "display_order",
+        "title",
+    )
+    serializer_class = GalleryImageSerializer
