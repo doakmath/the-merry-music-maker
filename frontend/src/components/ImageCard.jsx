@@ -1,8 +1,11 @@
 import Card from "./ui/Card";
 
-function ImageCard({ image }) {
+function ImageCard({ image, onClick }) {
   return (
-    <Card>
+    <Card
+      className="cursor-pointer transition hover:shadow-lg"
+      onClick={onClick}
+    >
       <img
         src={image.image}
         alt={image.alt_text || image.title}
