@@ -44,8 +44,8 @@ function AlbumDetail() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
-      <section className="grid gap-8 md:grid-cols-[320px_1fr]">
-        <div className="overflow-hidden rounded-xl bg-gray-200 shadow-sm">
+      <section className="grid gap-8 md:grid-cols-[320px_1fr] md:items-center">
+        <div className="overflow-hidden rounded-xl bg-gray-200 shadow-lg">
           {album.cover_image ? (
             <img
               src={album.cover_image}
@@ -60,14 +60,10 @@ function AlbumDetail() {
         </div>
 
         <div>
-          <h1 className="text-4xl font-bold text-gray-900">
-            {album.title}
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-900">{album.title}</h1>
 
           {releaseYear && (
-            <p className="mt-2 text-gray-500">
-              Released {releaseYear}
-            </p>
+            <p className="mt-2 text-gray-500">Released {releaseYear}</p>
           )}
 
           {album.description && (
@@ -79,9 +75,13 @@ function AlbumDetail() {
       </section>
 
       <section className="mt-12">
-        <h2 className="text-2xl font-semibold text-gray-900">
-          Songs
-        </h2>
+        <div className="flex items-end justify-between">
+          <h2 className="text-2xl font-semibold text-gray-900">Songs</h2>
+
+          <span className="text-sm text-gray-500">
+            {album.songs.length} {album.songs.length === 1 ? "track" : "tracks"}
+          </span>
+        </div>
 
         {album.songs.length === 0 ? (
           <p className="mt-4 text-gray-600">
@@ -92,21 +92,26 @@ function AlbumDetail() {
             {album.songs.map((song) => (
               <div
                 key={song.id}
-                className="flex items-center gap-4 p-4"
+                className="flex items-start gap-4 p-4 transition-colors hover:bg-gray-50"
               >
-                <span className="w-8 text-gray-500">
-                  {song.track_number}
-                </span>
+                <span className="w-8 text-gray-500">{song.track_number}</span>
 
-                <div>
-                  <h3 className="font-medium text-gray-900">
-                    {song.title}
-                  </h3>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-medium text-gray-900">{song.title}</h3>
 
                   {song.contributing_artists && (
                     <p className="mt-1 text-sm text-gray-500">
                       {song.contributing_artists}
                     </p>
+                  )}
+                  {song.audio_file && (
+                    <audio
+                      controls
+                      src={song.audio_file}
+                      className="mt-3 w-full"
+                    >
+                      Your browser does not support audio playback.
+                    </audio>
                   )}
                 </div>
               </div>
