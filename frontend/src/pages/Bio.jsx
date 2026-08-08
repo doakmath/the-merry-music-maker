@@ -44,19 +44,24 @@ function Bio() {
       {!loading &&
         !error &&
         sections.map((section) => (
-          <Card key={section.id} className="mb-8 overflow-hidden">
+          <Card
+            key={section.id}
+            className={`mb-8 overflow-hidden ${
+              section.image
+                ? "md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"
+                : ""
+            }`}
+          >
             {section.image && (
               <img
                 src={section.image}
                 alt={section.title}
-                className="w-full object-cover"
+                className="h-full w-full object-contain"
               />
             )}
 
             <div className="p-6">
-              <h2 className="text-2xl font-semibold">
-                {section.title}
-              </h2>
+              <h2 className="text-2xl font-semibold">{section.title}</h2>
 
               <p className="mt-4 whitespace-pre-line leading-8 text-gray-700">
                 {section.body}

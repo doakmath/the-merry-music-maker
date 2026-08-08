@@ -47,12 +47,19 @@ function History() {
       {!loading && !error && (
         <>
           {sections.map((section) => (
-            <Card key={section.id} className="mb-8 overflow-hidden">
+            <Card
+              key={section.id}
+              className={`mb-8 overflow-hidden ${
+                section.image
+                  ? "md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"
+                  : ""
+              }`}
+            >
               {section.image && (
                 <img
                   src={section.image}
                   alt={section.title}
-                  className="w-full object-cover"
+                  className="h-full w-full object-contain"
                 />
               )}
 
@@ -76,19 +83,30 @@ function History() {
 
               <div className="space-y-8">
                 {events.map((event) => (
-                  <Card key={event.id} className="overflow-hidden">
+                  <Card
+                    key={event.id}
+                    className={`overflow-hidden ${
+                      event.image ? "md:grid md:grid-cols-[220px_1fr]" : ""
+                    }`}
+                  >
                     {event.image && (
                       <img
                         src={event.image}
                         alt={event.title}
-                        className="w-full object-cover"
+                        className="h-full max-h-72 w-full object-contain"
                       />
                     )}
 
                     <div className="p-6">
                       {event.date && (
                         <p className="mb-2 text-sm font-semibold text-gray-500">
-                          {event.date}
+                          {new Date(
+                            `${event.date}T00:00:00`,
+                          ).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
                         </p>
                       )}
 
