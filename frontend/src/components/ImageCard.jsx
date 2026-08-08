@@ -3,13 +3,13 @@ import Card from "./ui/Card";
 function ImageCard({ image, onClick }) {
   return (
     <Card
-      className="cursor-pointer transition hover:shadow-lg"
+      className="group cursor-pointer overflow-hidden transition hover:shadow-lg"
       onClick={onClick}
     >
       <img
         src={image.image}
         alt={image.alt_text || image.title}
-        className="h-64 w-full object-cover"
+       className="h-64 w-full object-contain bg-white transition duration-300 group-hover:scale-105"
       />
 
       <div className="p-4">

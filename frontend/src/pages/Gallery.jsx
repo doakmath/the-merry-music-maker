@@ -4,6 +4,8 @@ import ImageCard from "../components/ImageCard";
 import ImageModal from "../components/ImageModal";
 import SectionHeader from "../components/ui/SectionHeader";
 
+import { getGalleryImages } from "../api/galleryImages";
+
 function Gallery() {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -13,15 +15,7 @@ function Gallery() {
   useEffect(() => {
     async function fetchImages() {
       try {
-        const response = await fetch(
-          "http://127.0.0.1:8000/api/gallery-images/"
-        );
-
-        if (!response.ok) {
-          throw new Error("Could not load gallery images.");
-        }
-
-        const data = await response.json();
+        const data = await getGalleryImages();
         setImages(data);
       } catch (error) {
         setError(error.message);
