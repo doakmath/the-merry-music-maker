@@ -12,6 +12,8 @@ import Gallery from "./pages/Gallery";
 
 import AlbumDetail from "./pages/AlbumDetail";
 
+import PurchaseSuccess from "./pages/PurchaseSuccess";
+
 
 
 function App() {
@@ -28,6 +30,7 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
 
           <Route path="/music/:albumId" element={<AlbumDetail />} />
+          <Route path="/purchase-success" element={<PurchaseSuccess />} />
         </Route>
       </Routes>
     </BrowserRouter>

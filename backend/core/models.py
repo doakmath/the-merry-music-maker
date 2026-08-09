@@ -22,6 +22,9 @@ class Album(models.Model):
 
     download_file = models.FileField(upload_to="album-downloads/", blank=True, null=True, )
 
+    price_cents = models.PositiveIntegerField(default=1000)
+    is_for_sale = models.BooleanField(default=True)
+
     release_date = models.DateField(blank=True, null=True)
     display_order = models.PositiveIntegerField(default=0)
 
@@ -140,3 +143,24 @@ class GalleryImage(models.Model):
 
     def __str__(self):
         return self.title or self.image.name
+
+
+class Purchase(models.Model):
+    album = models.ForeignKey(
+        Album,
+        on_delete=models.PROTECT,
+        related_name="purchases",
+    )
+    stripe_session_id = models.CharField(
+        max_length=255,
+        unique=True,
+    )
+    customer_email = models.EmailField(
+        blank=True,
+        null=True,
+    )
+    amount_paid = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.album.title} - {self.customer_email or 'Unknown customer'}"

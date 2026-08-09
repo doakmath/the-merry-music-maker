@@ -1,4 +1,5 @@
 from rest_framework.routers import DefaultRouter
+from django.urls import path
 
 from .views import (
     AlbumViewSet,
@@ -8,6 +9,9 @@ from .views import (
     ContentSectionViewSet,
     SiteSettingsViewSet,
     GalleryImageViewSet,
+    create_checkout_session,
+    verify_checkout_session,
+    stripe_webhook,
 )
 
 
@@ -25,4 +29,22 @@ router.register(
     basename="gallery-image",
 )
 
-urlpatterns = router.urls
+urlpatterns = [
+    path(
+        "checkout/create/",
+        create_checkout_session,
+        name="create-checkout-session",
+    ),
+    path(
+        "checkout/verify/",
+        verify_checkout_session,
+        name="verify-checkout-session",
+    ),
+    path(
+        "stripe/webhook/",
+        stripe_webhook,
+        name="stripe-webhook",
+    ),
+]
+
+urlpatterns += router.urls

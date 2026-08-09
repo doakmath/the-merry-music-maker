@@ -10,6 +10,9 @@ function AlbumDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const [purchasing, setPurchasing] = useState(false);
+  const [purchaseError, setPurchaseError] = useState("");
+
   useEffect(() => {
     async function fetchAlbum() {
       try {
@@ -25,6 +28,38 @@ function AlbumDetail() {
 
     fetchAlbum();
   }, [albumId]);
+
+  async function handlePurchase() {
+    try {
+      setPurchasing(true);
+      setPurchaseError("");
+
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/checkout/create/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            album_id: album.id,
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Unable to start checkout.");
+      }
+
+      window.location.href = data.checkout_url;
+    } catch (error) {
+      console.error(error);
+      setPurchaseError("Unable to start checkout. Please try again.");
+      setPurchasing(false);
+    }
+  }
 
   if (loading) {
     return <p>Loading album...</p>;
@@ -71,6 +106,33 @@ function AlbumDetail() {
               {album.description}
             </p>
           )}
+
+          {album.is_for_sale && (
+            <div className="mt-6 inline-flex items-center gap-4 rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm">
+              <div>
+                <p className="font-semibold text-gray-900">
+                  Digital Album — ${(album.price_cents / 100).toFixed(2)}
+                </p>
+                <p className="text-sm text-gray-500">
+                  Download all {album.songs.length} tracks as MP3s
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={handlePurchase}
+                disabled={purchasing}
+                className="rounded-lg bg-blue-600 px-5 py-2.5 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {purchasing ? "Opening..." : "Buy Album"}
+              </button>
+            </div>
+          )}
+
+          {purchaseError && (
+            <p className="mt-3 text-sm text-red-600">{purchaseError}</p>
+          )}
+          
         </div>
       </section>
 
