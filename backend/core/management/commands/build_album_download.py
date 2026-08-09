@@ -1,6 +1,7 @@
 import shutil
 from pathlib import Path
 
+from django.core.files import File
 from django.core.management.base import BaseCommand, CommandError
 from mutagen.id3 import APIC, ID3, TALB, TIT2, TPE1, TPE2, TRCK
 
@@ -11,7 +12,7 @@ ARTIST_NAME = "The Merry Music Maker"
 
 
 class Command(BaseCommand):
-    help = "Build a tagged downloadable ZIP package for an album."
+    help = "Build and upload a tagged downloadable ZIP package for an album."
 
     def add_arguments(self, parser):
         parser.add_argument("album_id", type=int)
@@ -46,17 +47,16 @@ class Command(BaseCommand):
         build_root = Path("tmp_album_download")
         album_dir = build_root / safe_album_title
 
-        # Start fresh if this album was previously built.
         if album_dir.exists():
             shutil.rmtree(album_dir)
 
         album_dir.mkdir(parents=True, exist_ok=True)
 
-        # Download album cover from R2.
+        # Get album artwork from R2.
         with album.cover_image.open("rb") as cover_source:
             cover_data = cover_source.read()
 
-        # Save cover separately inside the download package.
+        # Save artwork as a standalone file in the package.
         cover_path = album_dir / "cover.jpeg"
 
         with open(cover_path, "wb") as cover_file:
@@ -68,7 +68,7 @@ class Command(BaseCommand):
 
         total_tracks = songs.count()
 
-        # Build each downloadable MP3.
+        # Build tagged downloadable MP3 copies.
         for song in songs:
             if not song.audio_file:
                 self.stdout.write(
@@ -87,12 +87,11 @@ class Command(BaseCommand):
 
             output_path = album_dir / filename
 
-            # Copy streaming MP3 from R2.
+            # Copy source MP3 from R2.
             with song.audio_file.open("rb") as source:
                 with open(output_path, "wb") as destination:
                     shutil.copyfileobj(source, destination)
 
-            # Add metadata to downloadable copy.
             tags = ID3()
 
             tags.add(
@@ -130,7 +129,6 @@ class Command(BaseCommand):
                 )
             )
 
-            # Embed album artwork.
             tags.add(
                 APIC(
                     encoding=3,
@@ -149,18 +147,45 @@ class Command(BaseCommand):
                 )
             )
 
-        # Create ZIP beside the album build folder.
+        # Build the ZIP.
         zip_base = build_root / safe_album_title
 
-        zip_path = shutil.make_archive(
-            str(zip_base),
-            "zip",
-            root_dir=album_dir,
+        zip_path = Path(
+            shutil.make_archive(
+                str(zip_base),
+                "zip",
+                root_dir=album_dir,
+            )
         )
 
         self.stdout.write(
             self.style.SUCCESS(
-                f"\nZIP created successfully:\n{Path(zip_path).resolve()}"
+                f"\nZIP created:\n{zip_path.resolve()}"
+            )
+        )
+
+        # Replace the album's previous downloadable package, if one exists.
+        if album.download_file:
+            album.download_file.delete(save=False)
+
+        # Upload ZIP through Django storage.
+        # Because default storage is R2, this goes directly to Cloudflare.
+        with open(zip_path, "rb") as zip_file:
+            album.download_file.save(
+                f"{safe_album_title}.zip",
+                File(zip_file),
+                save=True,
+            )
+
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"\nUploaded to R2:\n{album.download_file.name}"
+            )
+        )
+
+        self.stdout.write(
+            self.style.SUCCESS(
+                "\nAlbum download package is ready."
             )
         )
 

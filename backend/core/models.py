@@ -20,6 +20,8 @@ class Album(models.Model):
 
     cover_image = models.ImageField(upload_to="albums/", blank=True, null=True)
 
+    download_file = models.FileField(upload_to="album-downloads/", blank=True, null=True, )
+
     release_date = models.DateField(blank=True, null=True)
     display_order = models.PositiveIntegerField(default=0)
 
