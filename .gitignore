@@ -16,3 +16,6 @@ dist/
 
 # System
 .DS_Store
+
+# Generated album download packages
+backend/tmp_album_download/
