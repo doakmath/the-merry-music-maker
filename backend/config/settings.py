@@ -184,3 +184,7 @@ FRONTEND_URL = os.getenv(
     "FRONTEND_URL",
     "http://localhost:5173",
 )
+
+
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG

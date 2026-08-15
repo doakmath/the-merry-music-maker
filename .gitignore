@@ -22,3 +22,7 @@ backend/tmp_album_download/
 
 
 backend/staticfiles/
+
+
+backend/core_content.json
+backend/core_data.json
