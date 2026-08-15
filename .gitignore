@@ -19,3 +19,6 @@ dist/
 
 # Generated album download packages
 backend/tmp_album_download/
+
+
+backend/staticfiles/
