@@ -5,6 +5,8 @@ from rest_framework import viewsets
 import os
 import stripe
 
+from django.conf import settings
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -128,12 +130,12 @@ def create_checkout_session(request):
             },
 
             success_url=(
-                "http://localhost:5173/purchase-success"
+                f"{settings.FRONTEND_URL}/purchase-success"
                 "?session_id={CHECKOUT_SESSION_ID}"
             ),
 
-            cancel_url="http://localhost:5173/music",
-        )
+            cancel_url=f"{settings.FRONTEND_URL}/music",
+                )
 
         return Response(
             {

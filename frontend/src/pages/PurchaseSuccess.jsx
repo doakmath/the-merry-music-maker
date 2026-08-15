@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
+import { API_BASE_URL } from "../api/client";
+
 function PurchaseSuccess() {
   const [searchParams] = useSearchParams();
 
@@ -18,7 +20,7 @@ function PurchaseSuccess() {
     async function verifyPurchase() {
       try {
         const response = await fetch(
-          `http://127.0.0.1:8000/api/checkout/verify/?session_id=${encodeURIComponent(
+          `${API_BASE_URL}/checkout/verify/?session_id=${encodeURIComponent(
             sessionId,
           )}`,
         );

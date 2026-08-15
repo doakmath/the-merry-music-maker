@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 
 import { getAlbum } from "../api/albums";
 
+import { API_BASE_URL } from "../api/client";
+
 function AlbumDetail() {
   const { albumId } = useParams();
 
@@ -35,7 +37,7 @@ function AlbumDetail() {
       setPurchaseError("");
 
       const response = await fetch(
-        "http://127.0.0.1:8000/api/checkout/create/",
+        `${API_BASE_URL}/checkout/create/`,
         {
           method: "POST",
           headers: {
@@ -132,7 +134,7 @@ function AlbumDetail() {
           {purchaseError && (
             <p className="mt-3 text-sm text-red-600">{purchaseError}</p>
           )}
-          
+
         </div>
       </section>
 

@@ -25,12 +25,19 @@ load_dotenv(BASE_DIR / ".env")
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-jkxfhe(^bwvyx4pj5v@t2n9ju_%!4g9f8!h_h=+zcdxguau3+y'
+SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv(
+        "DJANGO_ALLOWED_HOSTS",
+        "localhost,127.0.0.1",
+    ).split(",")
+    if host.strip()
+]
 
 
 # Application definition
@@ -84,11 +91,26 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "the_merry_music_maker",
-        "USER": "mathewdoak",
-        "PASSWORD": "",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "NAME": os.getenv(
+            "DB_NAME",
+            "the_merry_music_maker",
+        ),
+        "USER": os.getenv(
+            "DB_USER",
+            "mathewdoak",
+        ),
+        "PASSWORD": os.getenv(
+            "DB_PASSWORD",
+            "",
+        ),
+        "HOST": os.getenv(
+            "DB_HOST",
+            "localhost",
+        ),
+        "PORT": os.getenv(
+            "DB_PORT",
+            "5432",
+        ),
     }
 }
 
@@ -155,5 +177,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    os.getenv(
+        "FRONTEND_URL",
+        "http://localhost:5173",
+    ),
 ]
+
+FRONTEND_URL = os.getenv(
+    "FRONTEND_URL",
+    "http://localhost:5173",
+)
