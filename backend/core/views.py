@@ -224,6 +224,8 @@ def stripe_webhook(request):
 
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
+        if session["payment_status"] != "paid":
+            return HttpResponse(status=200)
 
         try:
             album_id = session["metadata"]["album_id"]
