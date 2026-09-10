@@ -40,7 +40,7 @@ function Videos() {
     <main className="mx-auto max-w-5xl px-6 py-12">
       <SectionHeader
         title="Videos"
-        subtitle="Performances, recordings, and other video content."
+        subtitle="Sing along, dance along, and play along with the Merry Music Maker."
       />
 
       {loading && <p>Loading...</p>}

@@ -79,7 +79,7 @@ function History() {
 
           {events.length > 0 && (
             <section className="mt-12">
-              <h2 className="mb-8 text-3xl font-semibold">Timeline</h2>
+              {/* <h2 className="mb-8 text-3xl font-semibold">Timeline</h2> */}
 
               <div className="space-y-8">
                 {events.map((event) => (
