@@ -29,7 +29,7 @@ function Music() {
     <main className="mx-auto max-w-6xl px-6 py-12">
       <SectionHeader
         title="Music"
-        subtitle="Browse albums, enjoy the songs, and explore the interactive music of The Merry Music Maker.  It's a hand-clappin', toe-tappin' time with the Merry Music Maker."
+        subtitle="Browse albums, enjoy the songs, and explore the interactive music of The Merry Music Maker.  It's a hand-clappin', toe-tappin' good time with the Merry Music Maker."
       />
 
       {loading && <p>Loading albums...</p>}
