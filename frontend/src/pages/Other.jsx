@@ -29,8 +29,8 @@ function Other() {
   return (
     <main className="mx-auto max-w-5xl px-6 py-12">
       <SectionHeader
-        title="Other"
-        subtitle="Additional content from The Merry Music Maker."
+        title="Testimonials"
+        subtitle="What a Nice Thing to Say..."
       />
 
       {loading && <p>Loading...</p>}

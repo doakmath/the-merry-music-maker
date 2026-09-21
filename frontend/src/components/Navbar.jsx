@@ -34,7 +34,7 @@ function Navbar() {
         </NavLink>
 
         <NavLink to="/other" className={linkClasses}>
-          Other
+          Testimonials
         </NavLink>
       </div>
     </nav>
